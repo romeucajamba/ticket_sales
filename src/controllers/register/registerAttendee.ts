@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { RegisterAttendeeUseCase } from '../useCases/registerAttendee.js';
+import { AttendeesRepositoryPrisma } from '../../repositories/attendeeRepository.js';
 
 
 export async function registerAttendeeController(request:FastifyRequest, reply:FastifyReply) {
@@ -19,9 +20,12 @@ export async function registerAttendeeController(request:FastifyRequest, reply:F
             phone,
         } = schemaregisterAttedee.parse(request.body)
 
-    try {
-         const registerAttendeeData = new RegisterAttendeeUseCase()
-        await registerAttendeeData.registerAttendee({
+    try { 
+            //Passando o repositório como dependência
+            
+         const prismaRepository = new AttendeesRepositoryPrisma()
+         const registerAttendeeData = new RegisterAttendeeUseCase(prismaRepository)
+         await registerAttendeeData.registerAttendee({
             attendeeName,
             attendeeEmail,
             document,

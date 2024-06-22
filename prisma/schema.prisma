@@ -13,7 +13,7 @@ datasource db {
 
     
 model Attendees {
-      attendeeId Int @id @default(autoincrement()) @map("attendee_id")
+      attendeeId String @id @default(uuid()) @map("attendee_id")
       attendeeName String @map("attendee_name")
       attendeeEmail String @unique @map("attendee_email")
       document String
@@ -28,7 +28,7 @@ model Tickets {
       id Int @id @default(autoincrement())
       createdAt DateTime @default(now()) @map("create_at")
       maxQuantity  Int @default(0) @map("maxquantity")
-      idAttendee Int @map("id_attendee")
+      idAttendee String @map("id_attendee")
 
       attendee Attendees @relation(fields: [idAttendee], references: [attendeeId], onDelete: Cascade)
     

@@ -7,7 +7,7 @@ import { InsertTicketRepository } from '../../repositories/insertTicket.js';
 export async function getAttendeeTicket(request:FastifyRequest, reply:FastifyReply) {
 
     const schemaTicketId = z.object({
-        attendeeId: z.coerce.number().int(),
+        attendeeId: z.string().uuid(),
         eventId: z.string().uuid(),
         priceId: z.coerce.number().int()
     })

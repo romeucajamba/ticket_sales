@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { RegisterAttendeeUseCase } from '../useCases/registerAttendee.js';
 import { AttendeesRepositoryPrisma } from '../../repositories/attendeeRepository.js';
+import { UserAllradyExistError } from '../../error/emailExistError.js';
 
 
 export async function registerAttendeeController(request:FastifyRequest, reply:FastifyReply) {
@@ -31,8 +32,12 @@ export async function registerAttendeeController(request:FastifyRequest, reply:F
             document,
             phone
         })
-    } catch {
-        return reply.status(409).send()
+    } catch (err){
+        if(err instanceof UserAllradyExistError){
+            return reply.status(409).send({message: err.message})
+        }
+        
+        return reply.status(500).send()
     }
 
     return reply.status(201).send()

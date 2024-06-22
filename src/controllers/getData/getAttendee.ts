@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { z } from 'zod';
 import { dbConnector } from '../../lib/db_connector.js';
-import { BadRequest } from '../../error/badrequest.js';
+
 
 
 export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
@@ -26,7 +26,7 @@ export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
 
         if(attendee == null){
 
-            throw new BadRequest("Participante não encontrado!!")
+            throw new Error("Participante não encontrado!!")
         }
 
         const baseURL = `${request.protocol}://${request.hostname}`;

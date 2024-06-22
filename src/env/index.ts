@@ -1,6 +1,6 @@
 import 'dotenv';
 import { z } from 'zod';
-import { BadRequest } from '../error/badrequest.js';
+import { BadRequest } from '../error/badRequest.js';
 
 
 const envSchema = z.object({

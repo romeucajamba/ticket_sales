@@ -1,4 +1,4 @@
-import { BadRequest } from '../../error/badrequest.js';
+import { UserAllradyExistError } from '../../error/emailExistError.js';
 import { RegisterAttendee } from '../../interfaces/create/registerAttendee.js';
 import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
 
@@ -20,7 +20,7 @@ export class RegisterAttendeeUseCase {
      const findEmail = await this.attendeeRepositoryDependency.findByEmail(attendeeEmail)
 
      if(findEmail != null){
-        throw new BadRequest("Email já está registrado no evento!!")
+        throw new UserAllradyExistError()
      }
 
         await this.attendeeRepositoryDependency.insertAttendee({

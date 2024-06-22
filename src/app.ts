@@ -10,6 +10,9 @@ import { getAttendeeBadgeRoute } from './routes/get/get_attendees.js';
 
 //Post routes
 import { registerAttendeesForEventRoute } from './routes/post/register_attendees.js';
+import { error } from 'console';
+import { request } from 'http';
+import { ZodAny, ZodError } from 'zod';
 
 
 //Delete Routes
@@ -29,7 +32,7 @@ server.register( fastifySwagger, {
         costumes:['application/json'],
         produces: ['application/json'],
         info: {
-            title: 'pass in',
+            title: 'Ticket',
             description: 'API para criação de eventos da Global Services Corporation',
             version:'1.0.0'
         },
@@ -56,5 +59,11 @@ server.register(registerAttendeesForEventRoute)
 //Delete
 
 
-//server.setErrorHandler(errorHandler)
+server.setErrorHandler((error, request, reply) => {
+    if(error instanceof ZodError){
+        return reply.status(400).send({message:'Erro de validação.', issues: error.format()})
+    }
+
+    return reply.status(500).send({message:'Erro interno no servidor'})
+})
 

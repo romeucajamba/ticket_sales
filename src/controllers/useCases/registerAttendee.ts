@@ -1,6 +1,6 @@
-import { dbConnector } from '../../lib/db_connector.js';
 import { BadRequest } from '../../error/badrequest.js';
 import { RegisterAttendee } from '../../interfaces/create/registerAttendee.js';
+import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
 
 
 
@@ -8,7 +8,7 @@ import { RegisterAttendee } from '../../interfaces/create/registerAttendee.js';
 //Não tem conexão directa com o prisma
 
 export class RegisterAttendeeUseCase {
-    constructor(private attendeeRepositoryDependency: any){}
+    constructor(private attendeeRepositoryDependency: AttendeesRepository){}
 
     async registerAttendee({
         attendeeName,
@@ -17,16 +17,11 @@ export class RegisterAttendeeUseCase {
         phone,
     }:RegisterAttendee){
     
-         //Procurando email no evento
-         const attendee_mail = await dbConnector.attendees.findUnique({
-            where:{
-                attendeeEmail: attendeeEmail // ou seja, você está procurando por um único registro com este endereço de e-mail
-            }
-        })
-    
-        if(attendee_mail != null){
-                throw new BadRequest("Email já está registrado no evento!!")
-        }
+     const findEmail = await this.attendeeRepositoryDependency.findByEmail(attendeeEmail)
+
+     if(findEmail != null){
+        throw new BadRequest("Email já está registrado no evento!!")
+     }
 
         await this.attendeeRepositoryDependency.insertAttendee({
             attendeeName,

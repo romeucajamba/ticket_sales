@@ -7,7 +7,7 @@ import { BadRequest } from '../../error/badrequest.js';
 export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
     
     const paramsSchema = z.object({
-        attendeeId: z.coerce.number().int(),
+        attendeeId: z.string().uuid(),
     })
 
         const { attendeeId } = paramsSchema.parse(request.params)

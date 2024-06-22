@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
-import { getAttendeeTicket } from '../../controllers/handlerCreate/get_ticket_attendee.js';
+import { getAttendeeTicket } from '../../controllers/register/get_ticket_attendee.js';
 
 
 
 export async function getTicketAttendeeRoute(server: FastifyInstance) {
-    server.withTypeProvider<ZodTypeProvider>().post('/attendees/:eventId/:attendeeId/:priceId/ticket', {
+    server.withTypeProvider<ZodTypeProvider>().post('/attendees/:attendeeId/ticket', {
         schema:{
             summary: 'Get Ticket',
             tags: ['Ticket'],

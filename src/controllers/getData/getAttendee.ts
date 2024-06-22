@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { z } from 'zod';
-import { prisma } from '../../lib/db_connector.js';
+import { dbConnector } from '../../lib/db_connector.js';
 import { BadRequest } from '../../error/badrequest.js';
 
 
@@ -12,16 +12,13 @@ export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
 
         const { attendeeId } = paramsSchema.parse(request.params)
 
-        const attendee = await prisma.attendees.findUnique({
+        const attendee = await dbConnector.attendees.findUnique({
             select:{
                 attendeeName: true,
                 attendeeEmail: true,
-               event:{
-                    select:{
-                        eventName: true
-                    }
-               }
-            },
+                phone:true
+             },
+
             where:{
                 attendeeId: attendeeId
             }

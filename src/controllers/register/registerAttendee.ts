@@ -1,13 +1,9 @@
 import { z } from 'zod';
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { registerAttendeeUseCase } from '../useCases/registerAttendee.js';
+import { RegisterAttendeeUseCase } from '../useCases/registerAttendee.js';
 
 
 export async function registerAttendeeController(request:FastifyRequest, reply:FastifyReply) {
-
-    const schemaEventId = z.object({
-        eventId: z.string().uuid()
-    })
 
     const schemaregisterAttedee = z.object({
         attendeeName: z.string().min(4),
@@ -15,8 +11,6 @@ export async function registerAttendeeController(request:FastifyRequest, reply:F
         document: z.string(),
         phone: z.number().int(),
     })
-
-    const { eventId } = schemaEventId.parse(request.params)
     
     const { 
             attendeeName,
@@ -26,8 +20,8 @@ export async function registerAttendeeController(request:FastifyRequest, reply:F
         } = schemaregisterAttedee.parse(request.body)
 
     try {
-        await registerAttendeeUseCase({
-            eventId,
+         const registerAttendeeData = new RegisterAttendeeUseCase()
+        await registerAttendeeData.registerAttendee({
             attendeeName,
             attendeeEmail,
             document,
@@ -37,6 +31,6 @@ export async function registerAttendeeController(request:FastifyRequest, reply:F
         return reply.status(409).send()
     }
 
-    return reply.status(201).send(/*{attendee_eventId: attendee.idEvent}*/)
+    return reply.status(201).send()
 
 }

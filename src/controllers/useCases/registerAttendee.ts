@@ -1,54 +1,40 @@
-import { prisma } from '../../lib/db_connector.js';
+import { dbConnector } from '../../lib/db_connector.js';
 import { BadRequest } from '../../error/badrequest.js';
 import { RegisterAttendee } from '../../interfaces/create/registerAttendee.js';
+import { AttendeesRepositoryPrisma } from '../../repositories/attendeeRepository.js';
 
 
 
 
-export async function registerAttendeeUseCase({
-    eventId,
-    attendeeName,
-    attendeeEmail,
-    document,
-    phone,
-}:RegisterAttendee){
+export class RegisterAttendeeUseCase {
 
-     //Procurando email no evento
-     const attendee_mail = await prisma.attendees.findUnique({
-        where:{
-            attendeeEmail: attendeeEmail // ou seja, você está procurando por um único registro com este endereço de e-mail
-        }
-    })
-
-    if(attendee_mail != null){
-            throw new Error("Email já está registrado no evento!!")
-    }
-
-    const [eventTotal, amouthAttendeeForEvent] = await Promise.all([
-
-        prisma.event.findUnique({
+    async registerAttendee({
+        attendeeName,
+        attendeeEmail,
+        document,
+        phone,
+    }:RegisterAttendee){
+    
+         //Procurando email no evento
+         const attendee_mail = await dbConnector.attendees.findUnique({
             where:{
-                eventId:eventId,
-            }
-        }),
-        prisma.attendees.count({
-            where:{
-                idEvent:eventId
+                attendeeEmail: attendeeEmail // ou seja, você está procurando por um único registro com este endereço de e-mail
             }
         })
-    ])
+    
+        if(attendee_mail != null){
+                throw new BadRequest("Email já está registrado no evento!!")
+        }
+        
+        const prismaRepositoryAttendee = new AttendeesRepositoryPrisma()
 
-    if(eventTotal?.maximumAttendees && amouthAttendeeForEvent >= eventTotal.maximumAttendees){
-        throw new BadRequest("O número máximo para o evento já esgotou")
-    }
-
-    const attendee = await prisma.attendees.create({
-        data:{
+        prismaRepositoryAttendee.insertAttendee({
             attendeeName,
             attendeeEmail,
-            phone,
             document,
-            idEvent:eventId
-        }
-    })
+            phone,
+        })
+
+        
+    }
 }

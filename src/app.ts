@@ -5,10 +5,11 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import { fastifyCors } from '@fastify/cors';
 
 //Get routes
-
+import { getAttendeeBadgeRoute } from './routes/get/get_attendees.js';
 
 
 //Post routes
+import { registerAttendeesForEventRoute } from './routes/post/register_attendees.js';
 
 
 //Delete Routes
@@ -46,11 +47,11 @@ server.setSerializerCompiler(serializerCompiler);
 
 //Middlewers
 //GET
-
+server.register(getAttendeeBadgeRoute)
 
 
 //POST
-
+server.register(registerAttendeesForEventRoute)
 
 //Delete
 

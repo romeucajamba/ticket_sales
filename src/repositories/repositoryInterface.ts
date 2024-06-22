@@ -1,7 +1,7 @@
-import { Prisma, Event, Tickets } from "@prisma/client";
+import { Prisma, Tickets, Attendees } from "@prisma/client";
 
-export interface EventRepositoryMemmory {
-    create(data: Prisma.EventCreateInput):Promise<Event>
+export interface AttendeesRepository {
+    insertAttendee(data: Prisma.AttendeesCreateInput):Promise<Attendees>
 }
 
 export interface InsertTicketMemmory {

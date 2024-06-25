@@ -1,11 +1,18 @@
 import { UserAllradyExistError } from '../../error/emailExistError.js';
 import { RegisterAttendee } from '../../interfaces/create/registerAttendee.js';
 import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
+import { Attendees } from '@prisma/client';
 
 
 
 // Inversão de dependência não dependemos do repositório prisma
 //Não tem conexão directa com o prisma
+
+
+interface RegisterUseCaseReponse {
+    user: Attendees
+}
+
 
 export class RegisterAttendeeUseCase {
     constructor(private attendeeRepositoryDependency: AttendeesRepository){}
@@ -15,7 +22,7 @@ export class RegisterAttendeeUseCase {
         attendeeEmail,
         document,
         phone,
-    }:RegisterAttendee){
+    }:RegisterAttendee):Promise<RegisterUseCaseReponse>{
     
      const findEmail = await this.attendeeRepositoryDependency.findByEmail(attendeeEmail)
 
@@ -23,13 +30,13 @@ export class RegisterAttendeeUseCase {
         throw new UserAllradyExistError()
      }
 
-        await this.attendeeRepositoryDependency.insertAttendee({
+     const user = await this.attendeeRepositoryDependency.insertAttendee({
             attendeeName,
             attendeeEmail,
             document,
             phone,
         })
 
-        
+     return {user}   
     }
 }

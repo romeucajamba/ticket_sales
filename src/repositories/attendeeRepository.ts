@@ -23,6 +23,20 @@ export class AttendeesRepositoryPrisma implements AttendeesRepository {
         return attendee
    }
    
+    async findAll(){
+        const attendees = await dbConnector.attendees.findMany({
+            select:{
+                attendeeEmail:true,
+                attendeeName:true,
+                attendeeId:true,
+                document:true,
+                phone:true,
+                ticket:true
+            }
+        })
+        return attendees
+   }
+
    async findbyId(data:string){
 
     const idOfAttendee = await dbConnector.attendees.findUnique({

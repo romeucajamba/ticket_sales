@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { z } from 'zod';
-import { dbConnector } from '../../lib/db_connector.js';
+
 
 
 
@@ -12,17 +12,7 @@ export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
 
         const { attendeeId } = paramsSchema.parse(request.params)
 
-        const attendee = await dbConnector.attendees.findUnique({
-            select:{
-                attendeeName: true,
-                attendeeEmail: true,
-                phone:true
-             },
-
-            where:{
-                attendeeId: attendeeId
-            }
-        })
+  
 
         if(attendee == null){
 

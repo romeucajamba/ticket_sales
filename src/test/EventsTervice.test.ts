@@ -37,7 +37,7 @@ describe("Register Attendee", async () => {
       phone: 943667890
     })
 
-    expect(
+    await expect(
       registerUseCase.registerAttendee({
         attendeeName: 'Lucas Kunjuco',
         attendeeEmail: email,

@@ -22,4 +22,29 @@ export class AttendeesRepositoryPrisma implements AttendeesRepository {
 
         return attendee
    }
+   
+   async findbyId(data:string){
+
+      const attendeeId = await dbConnector.attendees.findUnique({
+         where:{
+             attendeeId:data
+         }
+     })
+
+      return attendeeId
+   }
+
+
+   async delete(data:string){
+      const deleteAttedee = await dbConnector.attendees.delete({
+         where:{
+             attendeeId:data
+         }
+     })
+
+  }
+
+   
+ 
+   
 }

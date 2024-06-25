@@ -5,3 +5,7 @@ export interface RegisterAttendee {
     document: string,
     phone: number
 }
+
+export interface AttendeeIdUseCase {
+    attendeeId:string
+}

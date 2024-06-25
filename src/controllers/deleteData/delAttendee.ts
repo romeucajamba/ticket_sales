@@ -5,7 +5,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 
 
 
-export async function deleteAttedee(request:FastifyRequest, reply:FastifyReply) {
+export async function deleteAttedeeController(request:FastifyRequest, reply:FastifyReply) {
 
     const paramsSchema = z.object({
         attendeeId: z.string().uuid(),
@@ -13,22 +13,12 @@ export async function deleteAttedee(request:FastifyRequest, reply:FastifyReply) 
 
     const { attendeeId } = paramsSchema.parse(request.params)
 
-    const serachAttende = await dbConnector.attendees.findUnique({
-        where:{
-            attendeeId:attendeeId
-        }
-    })
-
-    if(serachAttende == null){
-        throw new Error("Participante inexistente!")
+    try {
+        
+    } catch (error) {
+        
     }
 
-    const deleteAttedee = await dbConnector.attendees.delete({
-        where:{
-            attendeeId: attendeeId
-        }
-    })
-
     
-    return reply.send({attendee: deleteAttedee.attendeeId})
+    return reply.send()
 }

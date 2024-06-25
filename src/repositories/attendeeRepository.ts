@@ -25,13 +25,15 @@ export class AttendeesRepositoryPrisma implements AttendeesRepository {
    
    async findbyId(data:string){
 
-      const attendeeId = await dbConnector.attendees.findUnique({
-         where:{
-             attendeeId:data
-         }
-     })
+    const idOfAttendee = await dbConnector.attendees.findUnique({
 
-      return attendeeId
+        where:{
+            attendeeId:data            
+        },
+
+    })
+
+      return idOfAttendee
    }
 
 

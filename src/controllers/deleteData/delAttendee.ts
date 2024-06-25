@@ -17,7 +17,8 @@ export async function deleteAttedeeController(request:FastifyRequest, reply:Fast
     try {
         const prismaRepository = new AttendeesRepositoryPrisma()
         const deleteUseCase = new DeleteAttendeeUseCase(prismaRepository)
-        deleteUseCase.deleteData({attendeeId})
+
+        await deleteUseCase.deleteData({attendeeId})
 
     } catch (err) {
         if(err instanceof BadRequest){

@@ -1,5 +1,5 @@
 import { UserAllradyExistError } from '../../error/emailExistError.js';
-import { RegisterAttendee } from '../../interfaces/create/registerAttendee.js';
+import { RegisterAttendee } from '../../interfaces/create/attendeeInterafce.js';
 import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
 import { Attendees } from '@prisma/client';
 

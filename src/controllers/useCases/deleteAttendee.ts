@@ -1,4 +1,4 @@
-import { AttendeeIdUseCase } from '../../interfaces/create/registerAttendee.js';
+import { AttendeeIdUseCase } from '../../interfaces/create/attendeeInterafce.js';
 import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
 import { BadRequest } from '../../error/badRequest.js';
 

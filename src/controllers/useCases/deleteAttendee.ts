@@ -1,9 +1,10 @@
 import { AttendeeIdUseCase } from '../../interfaces/create/registerAttendee.js';
 import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
+import { BadRequest } from '../../error/badRequest.js';
 
 
 
-export class DeleteAttendeeUseCas{
+export class DeleteAttendeeUseCase{
     constructor(private IdAttedee: AttendeesRepository){}
 
     async deleteData({attendeeId}:AttendeeIdUseCase){
@@ -11,7 +12,7 @@ export class DeleteAttendeeUseCas{
         const ifAlreayExist = await this.IdAttedee.findbyId(attendeeId)
 
         if(ifAlreayExist == null){
-            throw new Error("Participante inexistente!")
+            throw new BadRequest("Participante inexistente!")
         }
 
         const deleteAttendee = await this.deleteData({attendeeId})

@@ -15,17 +15,21 @@ export async function getAttendeeTicket(request:FastifyRequest, reply:FastifyRep
         maxQuantity: z.number().int()
     })
 
-    const { idAttendee } = schemaTicketId.parse(request.params)
-    const { maxQuantity } = schemaCreateTicket.parse(request.body)
 
    try {
-         const insertTicketAttendeeData = new InsertTicketRepository()
-         const insertRepository = new TicketAttendeeCase(insertTicketAttendeeData)
 
-        await insertRepository.insertTicket({
+        const { idAttendee } = schemaTicketId.parse(request.params);
+        const { maxQuantity } = schemaCreateTicket.parse(request.body);
+        
+        const insertTicketAttendeeData = new InsertTicketRepository()
+        const insertRepository = new TicketAttendeeCase(insertTicketAttendeeData)
+
+        const ticket = await insertRepository.insertTicket({
             idAttendee,
             maxQuantity
         })
+
+        return reply.status(201).send({ticket})
         
    } catch (err) {
        if(err instanceof BadRequest){
@@ -33,8 +37,5 @@ export async function getAttendeeTicket(request:FastifyRequest, reply:FastifyRep
        }
        throw err
    }
-
-
-    return reply.status(201).send()
 
 }

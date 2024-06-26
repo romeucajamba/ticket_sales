@@ -10,6 +10,6 @@ export class GetAttendeeUseCase {
    async getAllAttendees() {
       const attendees = await this.attendeesRepository.findAll();
       
-      return attendees;
+    return attendees;
    }
 }

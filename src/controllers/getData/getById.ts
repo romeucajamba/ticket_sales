@@ -16,8 +16,9 @@ export async function getAttendeeByid(request:FastifyRequest, reply:FastifyReply
     try {
         const getAttendeeInRepository = new AttendeesRepositoryPrisma()
         const getAttendeeUseCase = new GetAttendeeById(getAttendeeInRepository)
+        const attendee = await getAttendeeUseCase.getById({attendeeId})
 
-        await getAttendeeUseCase.getById({attendeeId})
+        return reply.status(200).send(attendee);
 
     } catch (error) {
         if(error instanceof BadRequest){

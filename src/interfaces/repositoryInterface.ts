@@ -14,6 +14,6 @@ export interface RegisterUseCaseReponse {
 }
 
 
-export interface InsertTicketRepositoryIntercafe {
+export interface InsertTicketRepositoryInterface {
     insert(idAttendee: string, maxQuantity:number):Promise<Tickets>
 }

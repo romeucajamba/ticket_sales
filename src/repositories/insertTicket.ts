@@ -1,10 +1,10 @@
 import { dbConnector } from '../lib/db_connector.js';
-import { InsertTicketRepositoryIntercafe } from '../interfaces/repositoryInterface.js';
+import { InsertTicketRepositoryInterface } from '../interfaces/repositoryInterface.js';
 
 
 
 
-export class InsertTicketRepository implements InsertTicketRepositoryIntercafe {
+export class InsertTicketRepository implements InsertTicketRepositoryInterface {
 
     async insert(idAttendee: string, maxQuantity:number){
         const createTicket = await dbConnector.tickets.create({

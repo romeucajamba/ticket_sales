@@ -1,11 +1,11 @@
 import { RegisterTicketAttendee } from '../../interfaces/ticketAttendeeInterface.js';
-import { InsertTicketRepositoryIntercafe } from '../../interfaces/repositoryInterface.js';
+import { InsertTicketRepositoryInterface } from '../../interfaces/repositoryInterface.js';
 
 
 
 
 export class TicketAttendeeCase{
-    constructor(private ticketRepositoryData: InsertTicketRepositoryIntercafe ){}
+    constructor(private ticketRepositoryData: InsertTicketRepositoryInterface ){}
 
     async insertTicket({
         idAttendee,
@@ -13,9 +13,11 @@ export class TicketAttendeeCase{
     }:RegisterTicketAttendee) {
         
 
-        await this.ticketRepositoryData.insert(
+       const ticketAttendee = await this.ticketRepositoryData.insert(
             idAttendee,
             maxQuantity
         )
+
+        return {ticketAttendee}
     }
 }

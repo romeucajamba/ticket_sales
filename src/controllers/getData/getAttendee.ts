@@ -8,8 +8,10 @@ export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
     try {
         const repositoryPrisma = new AttendeesRepositoryPrisma()
         const getAllAttendee = new GetAttendeeUseCase(repositoryPrisma)
-        await getAllAttendee.getAllAttendees()
+        const attendees = await getAllAttendee.getAllAttendees()
 
+    
+        return reply.status(200).send(attendees);
     } catch (err) {
         if(err instanceof BadRequest){
             return reply.status(404).send({message:'Nenhum participante encontrado'})
@@ -19,5 +21,5 @@ export async function getAttendee(request:FastifyRequest, reply:FastifyReply){
     }
 
 
-    return reply.send({})
+    return reply.send({getAttendee})
 }

@@ -20,6 +20,8 @@ export async function deleteAttedeeController(request:FastifyRequest, reply:Fast
 
         await deleteUseCase.deleteData({attendeeId})
 
+        return reply.status(200).send({mesagem:'participante deletado'})
+
     } catch (err) {
         if(err instanceof BadRequest){
             return reply.status(404).send({message:'Participante não encontrado'})
@@ -27,6 +29,4 @@ export async function deleteAttedeeController(request:FastifyRequest, reply:Fast
         throw err
     }
 
-    
-    return reply.send()
 }

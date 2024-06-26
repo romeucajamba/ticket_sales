@@ -1,11 +1,15 @@
+import { AttendeesRepository } from '../../interfaces/repositoryInterface.js';
 
+export class GetAttendeeUseCase {
+   private attendeesRepository: AttendeesRepository;
 
+   constructor(attendeesRepository: AttendeesRepository) {
+      this.attendeesRepository = attendeesRepository;
+   }
 
-
-export class GetAttendeeUseCase{
-    
-
-    async getAllAttendees(){
-
-    }
+   async getAllAttendees() {
+      const attendees = await this.attendeesRepository.findAll();
+      
+      return attendees;
+   }
 }

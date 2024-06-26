@@ -3,21 +3,19 @@ import { serializerCompiler, validatorCompiler, jsonSchemaTransform } from 'fast
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import { fastifyCors } from '@fastify/cors';
+import {  ZodError } from 'zod';
+
 
 //Get routes
 import { getAttendeeBadgeRoute } from './routes/get/get_attendees.js';
-
+import { getAttendeeByIdRoute } from './routes/get/getAttendeeById.js';
 
 //Post routes
 import { registerAttendeesForEventRoute } from './routes/post/register_attendees.js';
-import { error } from 'console';
-import { request } from 'http';
-import { ZodAny, ZodError } from 'zod';
-
+import { getTicketAttendeeRoute } from './routes/post/get_ticket.js';
 
 //Delete Routes
-
-//import { errorHandler } from './error/errorHandler.js';
+import { deleteAttendeeById } from './routes/delete/delete_attendee.js';
 
 
 
@@ -51,13 +49,15 @@ server.setSerializerCompiler(serializerCompiler);
 //Middlewers
 //GET
 server.register(getAttendeeBadgeRoute)
+server.register(getAttendeeByIdRoute)
 
 
 //POST
 server.register(registerAttendeesForEventRoute)
+server.register(getTicketAttendeeRoute)
 
 //Delete
-
+server.register(deleteAttendeeById)
 
 server.setErrorHandler((error, request, reply) => {
     if(error instanceof ZodError){

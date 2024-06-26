@@ -1,6 +1,4 @@
 export interface RegisterTicketAttendee {
-    attendeeId: string,
-    eventId: string,
-    priceId:number,
+    idAttendee: string,
     maxQuantity:number
 }

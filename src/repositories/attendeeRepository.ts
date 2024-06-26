@@ -1,6 +1,6 @@
 import { dbConnector } from '../lib/db_connector.js';
 import { Prisma } from '@prisma/client';
-import { AttendeesRepository } from './repositoryInterface.js';
+import { AttendeesRepository } from '../interfaces/repositoryInterface.js';
 
 
 export class AttendeesRepositoryPrisma implements AttendeesRepository {
@@ -37,7 +37,7 @@ export class AttendeesRepositoryPrisma implements AttendeesRepository {
         return attendees
    }
 
-   async findbyId(data:string){
+   async findById(data:string){
 
     const idOfAttendee = await dbConnector.attendees.findUnique({
 

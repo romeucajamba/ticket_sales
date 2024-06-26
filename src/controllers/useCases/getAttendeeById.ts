@@ -1,5 +1,5 @@
-import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
-import { AttendeeIdUseCase } from '../../interfaces/create/attendeeInterafce.js';
+import { AttendeesRepository } from '../../interfaces/repositoryInterface.js';
+import { AttendeeIdUseCase } from '../../interfaces/attendeeInterafce.js';
 import { BadRequest } from '../../error/badRequest.js';
 import { Attendees } from '@prisma/client';
 
@@ -13,7 +13,7 @@ export class GetAttendeeById{
 
     async getById({attendeeId}:AttendeeIdUseCase):Promise<AttendeeIdresponse>{
         
-        const findAttendee = await this.attendee.findbyId(attendeeId)
+        const findAttendee = await this.attendee.findById(attendeeId)
 
         if(findAttendee == null){
             throw new BadRequest('Participante não existente!')

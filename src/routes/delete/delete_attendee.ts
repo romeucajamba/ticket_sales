@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
-import { deleteAttedee } from '../../controllers/deleteData/delAttendee.js';
+import { deleteAttedeeController } from '../../controllers/deleteData/delAttendee.js';
 
 
 
@@ -13,5 +13,5 @@ export async function deleteAttendeeById(server:FastifyInstance) {
             tags: ['Attendee']
 
         }
-    }, deleteAttedee)
+    }, deleteAttedeeController)
 }

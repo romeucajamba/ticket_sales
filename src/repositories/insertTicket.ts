@@ -1,14 +1,17 @@
 import { dbConnector } from '../lib/db_connector.js';
-import { InsertTicketMemmory } from './repositoryInterface.js';
-import { Prisma } from "@prisma/client";
+import { InsertTicketRepositoryIntercafe } from '../interfaces/repositoryInterface.js';
 
 
 
-export class InsertTicketRepository implements InsertTicketMemmory {
 
-    async insert(data: Prisma.TicketsCreateInput){
+export class InsertTicketRepository implements InsertTicketRepositoryIntercafe {
+
+    async insert(idAttendee: string, maxQuantity:number){
         const createTicket = await dbConnector.tickets.create({
-            data
+            data:{
+               idAttendee,
+               maxQuantity 
+            }
         });
 
         return createTicket

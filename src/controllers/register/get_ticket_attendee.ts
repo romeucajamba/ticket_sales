@@ -1,22 +1,21 @@
-import { z } from 'zod';
+import { string, z } from 'zod';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { TicketAttendeeCase } from '../useCases/getTicketAttendee.js';
 import { InsertTicketRepository } from '../../repositories/insertTicket.js';
+import { BadRequest } from '../../error/badRequest.js';
 
 
 export async function getAttendeeTicket(request:FastifyRequest, reply:FastifyReply) {
 
     const schemaTicketId = z.object({
-        attendeeId: z.string().uuid(),
-        eventId: z.string().uuid(),
-        priceId: z.coerce.number().int()
+        idAttendee: z.string().uuid(),
     })
 
     const schemaCreateTicket = z.object({
         maxQuantity: z.number().int()
     })
 
-    const { attendeeId, eventId, priceId } = schemaTicketId.parse(request.params)
+    const { idAttendee } = schemaTicketId.parse(request.params)
     const { maxQuantity } = schemaCreateTicket.parse(request.body)
 
    try {
@@ -24,23 +23,18 @@ export async function getAttendeeTicket(request:FastifyRequest, reply:FastifyRep
          const insertRepository = new TicketAttendeeCase(insertTicketAttendeeData)
 
         await insertRepository.insertTicket({
-            attendeeId,
-            eventId,
-            priceId,
+            idAttendee,
             maxQuantity
         })
-   } catch {
-        return reply.status(409).send()
+        
+   } catch (err) {
+       if(err instanceof BadRequest){
+         return reply.status(404).send({message: 'Ticket não criado'})
+       }
+       throw err
    }
 
 
-    return reply.status(201).send(/*{
-        ticket: {
-            id: createTicket.id,
-            event: createTicket.idEvent,
-            attendee: createTicket.idAttendee,
-            date: createTicket.createdAt,
-            quantity: createTicket.maxQuantity
-}}*/)
+    return reply.status(201).send()
 
 }

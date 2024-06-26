@@ -1,7 +1,7 @@
 import { UserAllradyExistError } from '../../error/emailExistError.js';
-import { RegisterAttendee } from '../../interfaces/create/attendeeInterafce.js';
-import { AttendeesRepository } from '../../repositories/repositoryInterface.js';
-import { Attendees } from '@prisma/client';
+import { RegisterAttendee } from '../../interfaces/attendeeInterafce.js';
+import { AttendeesRepository } from '../../interfaces/repositoryInterface.js';
+import { RegisterUseCaseReponse } from '../../interfaces/repositoryInterface.js';
 
 
 
@@ -9,9 +9,6 @@ import { Attendees } from '@prisma/client';
 //Não tem conexão directa com o prisma
 
 
-interface RegisterUseCaseReponse {
-    user: Attendees
-}
 
 
 export class RegisterAttendeeUseCase {

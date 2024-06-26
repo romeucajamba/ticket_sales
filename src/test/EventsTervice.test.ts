@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { AttendeesRepositoryPrisma } from '../repositories/attendeeRepository.js';
 import { RegisterAttendeeUseCase } from '../controllers/useCases/registerAttendee.js';
 import { UserAllradyExistError } from '../error/emailExistError.js';
-import { string } from "zod";
+
 
 
 describe("Register Attendee", async () => {

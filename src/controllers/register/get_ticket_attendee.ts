@@ -1,4 +1,4 @@
-import { string, z } from 'zod';
+import { z } from 'zod';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { TicketAttendeeCase } from '../useCases/getTicketAttendee.js';
 import { InsertTicketRepository } from '../../repositories/insertTicket.js';

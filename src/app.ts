@@ -59,7 +59,7 @@ server.register(getTicketAttendeeRoute)
 //Delete
 server.register(deleteAttendeeById)
 
-server.setErrorHandler((error, request, reply) => {
+server.setErrorHandler((error, _, reply) => {
     if(error instanceof ZodError){
         return reply.status(400).send({message:'Erro de validação.', issues: error.format()})
     }

@@ -1,4 +1,5 @@
-import { Prisma, Tickets, Attendees } from "@prisma/client";
+import { Prisma, Tickets,  Attendees } from "@prisma/client";
+
 
 export interface AttendeesRepository {
     findByEmail(data:string):Promise<Attendees | null>
@@ -15,5 +16,5 @@ export interface RegisterUseCaseReponse {
 
 
 export interface InsertTicketRepositoryInterface {
-    insert(idAttendee: string, maxQuantity:number):Promise<Tickets>
+    insertTicket(idAttendee:string, maxQuantity:number):Promise<Tickets>
 }

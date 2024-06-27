@@ -1,23 +1,18 @@
-import { RegisterTicketAttendee } from '../../interfaces/ticketAttendeeInterface.js';
 import { InsertTicketRepositoryInterface } from '../../interfaces/repositoryInterface.js';
+import { RegisterTicketAttendee } from '../../interfaces/ticketAttendeeInterface.js';
 
 
+export class InsertTicketUseCase{
+    constructor(private insertTicketrepository:InsertTicketRepositoryInterface){}
 
 
-export class TicketAttendeeCase{
-    constructor(private ticketRepositoryData: InsertTicketRepositoryInterface ){}
-
-    async insertTicket({
+    async createTicket({
         idAttendee,
         maxQuantity
-    }:RegisterTicketAttendee) {
-        
+    }:RegisterTicketAttendee){
 
-       const ticketAttendee = await this.ticketRepositoryData.insert(
-            idAttendee,
-            maxQuantity
-        )
+        const registerTicket = await this.insertTicketrepository.insertTicket(idAttendee, maxQuantity)
 
-        return {ticketAttendee}
+        return registerTicket
     }
 }

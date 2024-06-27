@@ -5,7 +5,7 @@ import { getAttendeeTicket } from '../../controllers/register/get_ticket_attende
 
 
 export async function getTicketAttendeeRoute(server: FastifyInstance) {
-    server.withTypeProvider<ZodTypeProvider>().post('/attendees/:attendeeId/ticket', {
+    server.withTypeProvider<ZodTypeProvider>().post('/attendees/:idAttendee/ticket', {
         schema:{
             summary: 'Get Ticket',
             tags: ['Ticket'],
